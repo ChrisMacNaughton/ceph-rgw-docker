@@ -1,5 +1,5 @@
 ```
-$ docker build .
+$ docker build -t rgw-image .
 Sending build context to Docker daemon   2.56kB
 Step 1/5 : FROM ubuntu:jammy
  ---> 216c552ea5ba
@@ -18,7 +18,8 @@ Step 5/5 : CMD [ "/usr/bin/radosgw", "--no-mon-config", "-f", "--cluster", "ceph
 Removing intermediate container 7f7e8045f243
  ---> 063647983ff6
 Successfully built 063647983ff6
-$ docker run --rm -v `pwd`/rgw:/var/lib/ceph/radosgw --name rgw -p 7480:7480 063647983ff6
+Successfully tagged rgw-image:latest
+$ docker run --rm -v `pwd`/rgw:/var/lib/ceph/radosgw --name rgw -p 7480:7480 rgw-image:latest
 ```
 
 In another terminal:
