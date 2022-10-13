@@ -115,13 +115,66 @@ $ docker exec -it rgw radosgw-admin user info --uid=icey
     "mfa_ids": []
 }
 $ # can also `docker exec -it rgw s3cmd ...`
+$ s3cmd --configure -c  s3test.cfg
+
+Enter new values or accept defaults in brackets with Enter.
+Refer to user manual for detailed description of all options.
+
+Access key and Secret key are your identifiers for Amazon S3. Leave them empty for using the env variables.
+Access Key [K1HAPAE29HZC52BJ3AX3]: 
+Secret Key [ncpQW8yey2jY5I5UpI4FMwIBm7XrSWBq9ns1Q8bG]: 
+Default Region [US]: 
+
+Use "s3.amazonaws.com" for S3 Endpoint and not modify it to the target Amazon S3.
+S3 Endpoint [localhost]: localhost:7480
+
+Use "%(bucket)s.s3.amazonaws.com" to the target Amazon S3. "%(bucket)s" and "%(location)s" vars can be used
+if the target S3 system supports dns based buckets.
+DNS-style bucket+hostname:port template for accessing a bucket [%(bucket).localhost]: %(bucket).localhost:7480
+
+Encryption password is used to protect your files from reading
+by unauthorized persons while in transfer to S3
+Encryption password: 
+Path to GPG program [/usr/bin/gpg]: 
+
+When using secure HTTPS protocol all communication with Amazon S3
+servers is protected from 3rd party eavesdropping. This method is
+slower than plain HTTP, and can only be proxied with Python 2.7 or newer
+Use HTTPS protocol [No]: 
+
+On some networks all internet access must go through a HTTP proxy.
+Try setting it here if you can't connect to S3 directly
+HTTP Proxy server name: 
+
+New settings:
+  Access Key: K1HAPAE29HZC52BJ3AX3
+  Secret Key: ncpQW8yey2jY5I5UpI4FMwIBm7XrSWBq9ns1Q8bG
+  Default Region: US
+  S3 Endpoint: localhost:7480
+  DNS-style bucket+hostname:port template for accessing a bucket: %(bucket).localhost:7480
+  Encryption password: 
+  Path to GPG program: /usr/bin/gpg
+  Use HTTPS protocol: False
+  HTTP Proxy server name: 
+  HTTP Proxy server port: 0
+
+Test access with supplied credentials? [Y/n] y
+Please wait, attempting to list all buckets...
+Success. Your access key and secret key worked fine :-)
+
+Now verifying that encryption works...
+Not configured. Never mind.
+
+Save settings? [y/N] y
+Configuration saved to 's3test.cfg'
+
 $ s3cmd -c s3test.cfg mb s3://foo
 Bucket 's3://foo/' created
-$ s3cmd -c rgw/s3test.cfg put Dockerfile s3://foo
+$ s3cmd -c s3test.cfg put Dockerfile s3://foo
 upload: 'Dockerfile' -> 's3://foo/Dockerfile'  [1 of 1]
  663 of 663   100% in    0s    62.58 KB/s  done
 
-$ s3cmd -c rgw/s3test.cfg get s3://foo/Dockerfile -
+$ s3cmd -c s3test.cfg get s3://foo/Dockerfile -
 download: 's3://foo/Dockerfile' -> '-'  [1 of 1]
  663 of 663   100% in    0s    15.33 KB/sFROM ubuntu:jammy
 RUN apt-get update && \
