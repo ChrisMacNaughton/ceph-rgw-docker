@@ -1,3 +1,11 @@
+Using a pre-built image:
+
+```
+$ docker run --rm -v `pwd`/rgw:/var/lib/ceph/radosgw --name rgw -p 7480:7480 iceyec/ceph-rgw-zipper:latest
+```
+
+Alternately, building it yourself:
+
 ```
 $ docker build -t rgw-image .
 Sending build context to Docker daemon   2.56kB
