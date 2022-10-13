@@ -11,4 +11,5 @@ RUN echo "[client]\n" \
     "rgw config store = dbstore\n" \
     "debug rgw = 5\n" > /etc/ceph/ceph.conf
 EXPOSE 7480
+VOLUME [ "/var/lib/ceph/radosgw" ]
 CMD [ "/usr/bin/radosgw", "--no-mon-config", "-f", "--cluster", "ceph" ]
